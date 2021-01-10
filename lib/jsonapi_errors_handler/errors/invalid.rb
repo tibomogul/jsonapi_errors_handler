@@ -7,14 +7,14 @@ module JsonapiErrorsHandler
     class Invalid < ::JsonapiErrorsHandler::Errors::StandardError
       def initialize(errors: {})
         @errors = errors
-        @status = 422
+        @status = '422'
         @title = 'Invalid request'
       end
 
       def serializable_hash
         errors.reduce([]) do |r, (att, msg)|
           r << {
-            status: status.to_s,
+            status: status,
             title: title,
             detail: msg,
             source: { pointer: "/data/attributes/#{att}" }
